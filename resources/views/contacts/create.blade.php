@@ -1,23 +1,32 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.main')
 
-<form action="/contacts" METHOD="POST">
-    @csrf
-    <input type="text" placeholder="unesite ime..." name="first_name">
-    <input type="text" placeholder="unesite prezime..." name="last_name">
-    <input type="text" placeholder="unesite email..." name="email">
-    <input type="text" placeholder="unesite br tel..." name="phone_number">
-    <input type="text" placeholder="unesite adresu..." name="address">
-    <button>save</button>
-</form>
+@section('content')
 
-</body>
-</html>
+
+
+    <form action="{{ route('contacts.store') }}" METHOD="POST">
+        @csrf
+        <input type="text" placeholder="unesite ime..." name="first_name" value="{{old('first_name')}}">
+        @error('first_name')
+        <p>{{$message}}</p>
+        @enderror
+        <input type="text" placeholder="unesite prezime..." name="last_name" value="{{old('last_name')}}">
+        @error('last_name')
+        <p>{{$message}}</p>
+        @enderror
+        <input type="text" placeholder="unesite email..." name="email" value="{{old('email')}}">
+        @error('email')
+        <p>{{$message}}</p>
+        @enderror
+        <input type="text" placeholder="unesite br tel..." name="phone_number" value="{{old('phone_number')}}">
+        @error('phone_number')
+        <p>{{$message}}</p>
+        @enderror
+        <input type="text" placeholder="unesite adresu..." name="address" value="{{old('address')}}">
+        @error('address')
+        <p>{{$message}}</p>
+        @enderror
+        <button>save</button>
+    </form>
+
+@endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,7 @@ class ContactController extends Controller
     ]);
     }
 
-    public function show(Request $request){
-        $contactID = $request->id;
-        $contact = Contact::query()->findOrFail($contactID);
+    public function show(Request $request, Contact $contact){
         return view('contacts.show', [
             "contact" => $contact
         ]);
@@ -26,7 +25,7 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
-    public function save(Request $request){
+    public function store(ContactRequest $request){
         Contact::query()->create([
            "first_name" => $request->first_name,
             "last_name" => $request->last_name,
@@ -34,19 +33,16 @@ class ContactController extends Controller
             "phone_number" => $request->phone_number,
             "address" => $request->address
         ]);
-        return redirect('/contacts');
+        return redirect()->route('contacts.index');
     }
 
-    public function edit(Request $request){
-        $contactID = $request->id;
-        $contact = Contact::query()->find($contactID);
+    public function edit(Request $request, Contact $contact){
         return view('contacts.edit', [
             "contact" => $contact
         ]);
     }
 
-    public function update(Request $request){
-        $contact = Contact::query()->findOrFail($request->id);
+    public function update(ContactRequest $request, Contact $contact){
         $contact->update([
             "first_name" => $request->first_name,
             "last_name" => $request->last_name,
@@ -54,13 +50,12 @@ class ContactController extends Controller
             "phone_number" => $request->phone_number,
             "address" => $request->address
         ]);
-        return redirect('/contacts');
+        return redirect()->route('contacts.index');
     }
 
-    public function destroy(Request $request){
-        $contact = Contact::query()->findOrFail($request->id);
+    public function destroy(Request $request,Contact $contact){
         $contact->delete();
-        return redirect('/contacts');
+        return redirect()->route('contacts.index');
     }
 
 }
