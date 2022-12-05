@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <form action="{{ route('contacts.update', ['contact'=>$contact->id]) }}" method="post">
+    <form class="float-right" action="{{ route('contacts.update', ['contact'=>$contact->id]) }}" method="post">
         @csrf
         @method('PUT')
         <input type="text" placeholder="unesite ime..." name="first_name" value="{{old('first_name', $contact->first_name)}}">
