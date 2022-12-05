@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/dashboard', [WebController::class, 'dashboard']);
+Route::get('/dashboard', [WebController::class, 'dashboard']);
 //Route::get('contacts', [ContactController::class, 'index']);
 //Route::get('/contacts/create', [ContactController::class, 'create']);
 //Route::get('/contacts/{id}', [ContactController::class, 'show']);

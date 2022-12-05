@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index(){
-    $contacts = Contact::all();
+    public function index(Request $request){
+    $contacts = Contact::query()->when($request->has('searchTerm'), function ($query) use($request){
+        $query->where('first_name', 'like', '%'.$request->searchTerm.'%');
+        $query->orWhere('last_name', 'like', '%'.$request->searchTerm.'%');
+    })
+        ->paginate(10)->withQueryString();
     return view('contacts.index', [
         "contacts" => $contacts
     ]);
